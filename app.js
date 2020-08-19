@@ -1,7 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const userRoutes = require("./Routes/userRoutes");
-const morgan = require('morgan');
+const viewsRoutes = require("./Routes/viewsRoutes");
+const morgan = require("morgan");
 const AppError = require("./utils/appError");
 // const rateLimit = require('express-rate-limit');
 const app = express();
@@ -11,8 +12,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 app.use((req, res, next) => {
   req.requestedTime = new Date().toISOString();
@@ -20,7 +21,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/users", userRoutes);
+// Routes
+app.use("/", viewsRoutes);
+app.use("/api/v1/users", userRoutes);
 
 // If not handled by any other middleware then it dosent exist handler
 app.all("*", (req, res, next) => {
