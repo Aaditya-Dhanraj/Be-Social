@@ -51,20 +51,22 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
-  // first check if pass is modified or not
-  if (!this.isModified("password")) return next();
+userSchema.pre('save', async function (next) {
+  //This will check if the password is actuall modified or not
+  if (!this.isModified('password')) return next();
 
-  //now hash the password
+  //this will hash the password at the cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
-  // and delete the passwordconfirm schema
+  //this will delete the passwordconfirm schema
   this.passwordConfirm = undefined;
+
+  next();
 });
 
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
   //
-  if (!this.isModified("password") || this.isNew) {
+  if (!this.isModified('password') || this.isNew) {
     return next();
   }
 
@@ -101,12 +103,12 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
 userSchema.methods.createPasswordResetToken = function () {
   // using crypto bcoz inbuilt in node js
-  const resetToken = crypto.randomBytes(32).toString("hex");
+  const resetToken = crypto.randomBytes(32).toString('hex');
 
   this.passwordResetToken = crypto
-    .createHash("sha256")
+    .createHash('sha256')
     .update(resetToken)
-    .digest("hex");
+    .digest('hex');
 
   // console.log({ resetToken }, this.passwordResetToken);
 

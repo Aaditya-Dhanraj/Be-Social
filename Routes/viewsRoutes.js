@@ -1,12 +1,12 @@
 const express = require("express");
-const authController = require("../controllers/authcontroller");
+const authControllers = require("../controllers/authcontrollers");
 
 const router = express.Router();
 
 router.get(
   "/signup",
-  authController.isLoggedIn,
+  authControllers.isLoggedIn,
 );
-router.get("/login", authController.isLoggedIn);
+router.get("/login", authControllers.isLoggedIn);
 
 module.exports = router;
