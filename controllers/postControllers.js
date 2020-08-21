@@ -76,7 +76,7 @@ exports.createPost = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find().populate('postedBy', '_id name');
+  const posts = await Post.find().populate('postedBy', 'name');
 
   res.status(200).json({
     status: 'success',
@@ -98,6 +98,7 @@ exports.getMyPosts = catchAsync(async (req, res, next) => {
     status: 'success',
     result: myPosts.length,
     data: {
+      name: req.user.name,
       myPosts,
     },
   });
