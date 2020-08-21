@@ -13,8 +13,8 @@ router.patch(
   postControllers.createPost
 );
 
-router.get('/', authControllers.protect,postControllers.getAllPosts);
+router.get('/',postControllers.getAllPosts);
 
-router.route('/:id').get(authControllers.protect, postControllers.getMyPosts);
+router.get('/myPosts',postControllers.getMyPosts);
 
 module.exports = router;

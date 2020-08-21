@@ -76,7 +76,7 @@ exports.createPost = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find();
+  const posts = await Post.find().populate('postedBy', '_id name');
 
   res.status(200).json({
     status: 'success',
@@ -88,7 +88,7 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyPosts = catchAsync(async (req, res, next) => {
-  const myPosts = await Post.find({ postedBy: req.params.id });
+  const myPosts = await Post.find({ postedBy: req.user.id });
 
   if (!myPosts) {
     return next(new AppError('No document found with that ID', 404));
