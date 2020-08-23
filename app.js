@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const userRoutes = require('./Routes/userRoutes');
 const viewsRoutes = require('./Routes/viewsRoutes');
 const postRoutes = require('./Routes/postRoutes');
@@ -12,6 +13,9 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+app.enable('trust proxy');
+app.use(cors());
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
