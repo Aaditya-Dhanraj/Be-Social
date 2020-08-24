@@ -6,10 +6,8 @@ const router = express.Router();
 
 router.use(authControllers.protect);
 
-router.patch(
+router.post(
   '/uploadPost',
-  postControllers.uploadUserPhoto,
-  postControllers.resizeUserPhoto,
   postControllers.createPost
 );
 

@@ -13,7 +13,6 @@ const postSchema = new mongoose.Schema(
     photo: {
       type: String,
       required: [true, 'Please upload a photo'],
-      //   default: 'default.jpg',
     },
     postedBy: {
       type: mongoose.Schema.ObjectId,
