@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const globalErrorHandler = require('./controllers/errorControllers');
 const userRoutes = require('./Routes/userRoutes');
 const viewsRoutes = require('./Routes/viewsRoutes');
 const postRoutes = require('./Routes/postRoutes');
@@ -35,6 +36,6 @@ app.use('/api/v1/users', userRoutes);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;
