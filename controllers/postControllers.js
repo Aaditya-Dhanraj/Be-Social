@@ -42,6 +42,65 @@ exports.createPost = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.Unlike = catchAsync(async (req, res, next) => {
+  const likes = await Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $pull: { likes: req.user.id },
+    },
+    {
+      new: true,
+    }
+  ).exec(function (error, result) {
+    if (error) {
+      return next(new AppError(error, 422));
+    } else {
+      res.json(result);
+    }
+  });
+});
+exports.like = catchAsync(async (req, res, next) => {
+  await Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $push: { likes: req.user.id },
+    },
+    {
+      new: true,
+    }
+  ).exec(function (error, result) {
+    if (error) {
+      return next(new AppError(error, 422));
+    } else {
+      res.json(result);
+    }
+  });
+});
+exports.comment = catchAsync(async (req, res, next) => {
+  const comment = {
+    text: req.body.text,
+    postedBy: req.user.id,
+  };
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $push: { comments: comment },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate('comments.postedBy', '_id name')
+    .populate('postedBy', '_id name')
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
 exports.getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await Post.find().populate('postedBy', 'name');
 

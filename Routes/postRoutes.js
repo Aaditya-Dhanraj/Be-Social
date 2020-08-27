@@ -6,13 +6,16 @@ const router = express.Router();
 
 router.use(authControllers.protect);
 
-router.post(
-  '/uploadPost',
-  postControllers.createPost
-);
+router.post('/uploadPost', postControllers.createPost);
 
-router.get('/',postControllers.getAllPosts);
+router.get('/', postControllers.getAllPosts);
 
-router.get('/myPosts',postControllers.getMyPosts);
+router.get('/myPosts', postControllers.getMyPosts);
+
+router.put('/like', postControllers.like);
+
+router.put('/unLike', postControllers.Unlike);
+
+router.put('/comment', postControllers.comment);
 
 module.exports = router;
