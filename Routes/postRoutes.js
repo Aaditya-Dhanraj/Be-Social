@@ -18,4 +18,6 @@ router.put('/unLike', postControllers.Unlike);
 
 router.put('/comment', postControllers.comment);
 
+router.delete('/delete/:postId', postControllers.deletePost);
+
 module.exports = router;

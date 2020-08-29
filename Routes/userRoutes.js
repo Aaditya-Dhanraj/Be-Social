@@ -1,5 +1,6 @@
 const express = require('express');
 const authControllers = require('./../controllers/authcontrollers');
+const userControllers = require('./../controllers/userControllers');
 
 const router = express.Router();
 
@@ -7,6 +8,7 @@ const router = express.Router();
 router.post('/signup', authControllers.signup);
 router.post('/login', authControllers.login);
 router.use(authControllers.protect);
+router.get('/:id', userControllers.othersProfile);
 router.get('/logout', authControllers.logout);
 
 module.exports = router;
