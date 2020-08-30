@@ -4,6 +4,7 @@ const cors = require('cors');
 const globalErrorHandler = require('./controllers/errorControllers');
 const userRoutes = require('./Routes/userRoutes');
 const viewsRoutes = require('./Routes/viewsRoutes');
+const videoRoutes = require('./Routes/videoRoutes');
 const postRoutes = require('./Routes/postRoutes');
 const morgan = require('morgan');
 const AppError = require('./utils/appError');
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 app.use('/', viewsRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/users/video', videoRoutes);
 
 // If not handled by any other middleware then it dosent exist handler
 app.all('*', (req, res, next) => {
